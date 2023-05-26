@@ -27,8 +27,6 @@ jobs:
         run: sudo xcodebuild -license accept
       - name: Install CocoaPods
         run: sudo gem install cocoapods
-      - name: Install iOS dependencies
-        run: pod install
       - name: Create a Release IPA
         uses: ncipollo/release-action@v1
         with:
