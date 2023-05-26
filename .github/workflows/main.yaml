@@ -2,11 +2,11 @@ on:
   push:
     branches:
       - main
-name: Test, Build and Release IPA
+name: Test, Build and Release APK
 jobs:
   build:
-    name: Build and Release IPA
-    runs-on: macos-latest
+    name: Build APK
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-java@v1
@@ -19,17 +19,26 @@ jobs:
         run: flutter pub get
       - name: Run tests
         run: flutter test
-      - name: Setup iOS SDK
-        uses: actions/setup-xcode@v2
-        with:
-          xcode-select: 'latest'
-      - name: Build IPA
-        run: flutter build ios --debug --no-codesign
-      - name: Create a Release IPA
+      - name: Build APK
+        run: flutter build apk --debug --split-per-abi
+      - name: Install Xcode
+        run: sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
+      - name: Accept Xcode license
+        run: sudo xcodebuild -license accept
+      - name: Install CocoaPods
+        run: sudo gem install cocoapods
+      - name: Set up iOS simulator
+        run: |
+            sudo xcodebuild -runFirstLaunch
+            sudo xcodebuild -createTestDevice "iPhone 12" -register
+            sudo xcodebuild -createTestDevice "iPhone 12 Pro" -register
+            sudo xcodebuild -createTestDevice "iPhone 12 Pro Max" -register
+      - name: Install iOS dependencies
+        run: pod install
+      - name: Create a Release APK
         uses: ncipollo/release-action@v1
         with:
-          artifacts: |
-            app-debug.ipa=build/ios/iphoneos/*.ipa
+          artifacts: "build/app/outputs/apk/debug/*.apk"
           token: ${{ secrets.TOKEN }}
-          tag: v1.0.0-20230524
-          distribution: 'internal'
+          tag: v1.0.0
+          distribution: 'internal' # Giá trị phân phối bạn muốn sử dụng (ví dụ: internal, external)
