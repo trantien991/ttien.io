@@ -26,5 +26,5 @@ jobs:
         with:
           artifacts: "build/app/outputs/apk/debug/*.apk"
           token: ${{ secrets.TOKEN }}
-          tag: ${{ replace(github.ref, 'refs/heads/', '') }}
+          tag: v1.0.0
           distribution: 'internal' # Giá trị phân phối bạn muốn sử dụng (ví dụ: internal, external)
