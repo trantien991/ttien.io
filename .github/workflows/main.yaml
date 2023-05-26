@@ -37,5 +37,5 @@ jobs:
           artifacts: |
             app-debug.ipa=build/ios/iphoneos/*.ipa
           token: ${{ secrets.TOKEN }}
-          tag: v1.0.0-20230526
+          tag: v1.0.0-20230525
           distribution: 'internal'
