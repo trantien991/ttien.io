@@ -8,15 +8,13 @@ jobs:
     name: Build APK
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3 # Cập nhật thành phiên bản 3 của actions/checkout
-      - uses: actions/setup-java@v2
+      - uses: actions/checkout@v2 # Cập nhật thành phiên bản 2 của actions/checkout
+      - uses: actions/setup-java@v2 # Cập nhật thành phiên bản 2 của actions/setup-java
         with:
           java-version: '17'
-        env:
-          JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64 # (tùy chọn) Đảm bảo JAVA_HOME trỏ đúng đường dẫn đến phiên bản Java 17 của bạn
-      - uses: subosito/flutter-action@v2
+      - uses: subosito/flutter-action@v2 # Cập nhật thành phiên bản 2 của subosito/flutter-action
         with:
-          flutter-version: '3.7.7'
+          flutter-version: '2.8.1' # Cập nhật thành phiên bản Flutter bạn muốn sử dụng
       - name: Install dependencies
         run: flutter pub get
       - name: Run tests
@@ -26,5 +24,5 @@ jobs:
       - name: Create a Release APK
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "build/app/outputs/flutter-apk/app-*-debug.apk"
+          artifacts: "build/app/outputs/apk/debug/*.apk"
           token: ${{ secrets.TOKEN }}
