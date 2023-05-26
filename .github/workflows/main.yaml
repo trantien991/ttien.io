@@ -22,8 +22,9 @@ jobs:
       - name: Build APK
         run: flutter build apk --debug --split-per-abi
       - name: Create a Release APK
-        uses: ncipollo/release-action@v2
+        uses: ncipollo/release-action@v1
         with:
           artifacts: "build/app/outputs/apk/debug/*.apk"
           token: ${{ secrets.TOKEN }}
+          tag: ${{ github.ref }}
           distribution: 'internal' # Giá trị phân phối bạn muốn sử dụng (ví dụ: internal, external)
