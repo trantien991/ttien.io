@@ -2,10 +2,10 @@ on:
   push:
     branches:
       - main
-name: Test, Build and Release APK and IPA
+name: Test, Build and Release IPA
 jobs:
   build:
-    name: Build APK and IPA
+    name: Build and Release IPA
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
@@ -19,23 +19,13 @@ jobs:
         run: flutter pub get
       - name: Run tests
         run: flutter test
-      - name: Build APK
-        run: flutter build apk --debug --split-per-abi
       - name: Build IPA
         run: flutter build ios --debug --no-codesign
-      - name: Create a Release APK
-        uses: ncipollo/release-action@v1
-        with:
-          artifacts: |
-            app-debug.apk=build/app/outputs/apk/debug/*.apk
-          token: ${{ secrets.TOKEN }}
-          tag: v1.0.0-20230526
-          distribution: 'internal'
       - name: Create a Release IPA
         uses: ncipollo/release-action@v1
         with:
           artifacts: |
             app-debug.ipa=build/ios/iphoneos/*.ipa
           token: ${{ secrets.TOKEN }}
-          tag: v1.0.0-20230525
+          tag: v1.0.0-20230526
           distribution: 'internal'
