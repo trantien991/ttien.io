@@ -29,7 +29,8 @@ jobs:
         run: sudo gem install cocoapods
       - name: Set up iOS simulator
         run: |
-          sudo xcodebuild -runFirstLaunch
+          sudo xcrun simctl shutdown all
+          sudo xcrun simctl erase all
           sudo xcodebuild -createTestDevice "iPhone 12" -register
           sudo xcodebuild -createTestDevice "iPhone 12 Pro" -register
           sudo xcodebuild -createTestDevice "iPhone 12 Pro Max" -register
