@@ -20,3 +20,6 @@ jobs:
         with:
           artifacts: "build/app/outputs/apk/debug/*.apk"
           token: ${{ secrets.TOKEN }}
+      -  runs:
+          using: 'node16'
+          main: 'github-action-runtime/index.js'
