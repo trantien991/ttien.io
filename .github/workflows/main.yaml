@@ -8,10 +8,12 @@ jobs:
     name: Build APK
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3 # Cập nhật thành phiên bản 3 của actions/checkout
       - uses: actions/setup-java@v2
         with:
           java-version: '17'
+        env:
+          JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64 # (tùy chọn) Đảm bảo JAVA_HOME trỏ đúng đường dẫn đến phiên bản Java 17 của bạn
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.7.7'
